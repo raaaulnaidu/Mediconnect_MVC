@@ -1,0 +1,49 @@
+@model MediConnect.Web.Models.Provider
+@{
+  ViewData["Title"] = "Edit Provider";
+}
+
+<div class="card" style="max-width:980px;margin:auto">
+  <div class="section-head">
+    <div class="section-title">Edit Provider</div>
+  </div>
+
+  <form asp-action="Edit" method="post" class="grid grid-2">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <label>Full Name
+      <input class="input" asp-for="FullName" />
+      <span asp-validation-for="FullName" class="text-danger"></span>
+    </label>
+
+    <label>Specialty
+      <input class="input" asp-for="Specialty" />
+    </label>
+
+    <label>Phone
+      <input class="input" asp-for="Phone" />
+    </label>
+
+    <label>Email
+      <input class="input" asp-for="Email" type="email" />
+    </label>
+
+    <label>City
+      <input class="input" asp-for="City" />
+    </label>
+
+    <label>State
+      <input class="input" asp-for="State" maxlength="2" />
+    </label>
+
+    <label>NPI (optional)
+      <input class="input" asp-for="NpiNumber" />
+    </label>
+
+    <div class="mt-2">
+      <button class="btn btn-primary" type="submit">Save Changes</button>
+      <a class="btn" asp-action="Index">Cancel</a>
+    </div>
+  </form>
+</div>

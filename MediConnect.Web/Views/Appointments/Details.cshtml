@@ -1,0 +1,12 @@
+@using MediConnect.Web.Models
+@model MediConnect.Web.ViewModels.AppointmentDetailsVM
+@{ ViewData["Title"] = "Appointment Details"; }
+<h2>Appointment</h2>
+<ul>
+  <li><b>Starts:</b> @Model.Appointment.StartsAt.ToString("yyyy-MM-dd HH:mm")</li>
+  <li><b>Status:</b> @Model.Appointment.Status</li>
+  <li><b>Reason:</b> @Model.Appointment.Reason</li>
+  <li><b>Patient:</b> @Model.Patient?.FullName</li>
+  <li><b>Provider:</b> @Model.Provider?.FullName (@Model.Provider?.Specialty)</li>
+</ul>
+<p><a asp-action="Index">Back</a></p>

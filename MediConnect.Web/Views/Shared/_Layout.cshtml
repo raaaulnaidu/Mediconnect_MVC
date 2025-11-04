@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>@ViewData["Title"] - MediConnect</title>
+  <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><div class="brand-badge"></div> MediConnect</div>
+    <nav class="navlinks">
+      <a asp-controller="Home" asp-action="Index">Home</a>
+      <a asp-controller="Patients" asp-action="Index">Patients</a>
+      <a asp-controller="Providers" asp-action="Index">Providers</a>
+      <a asp-controller="Appointments" asp-action="Create">Book Appointment</a>
+      <a asp-controller="External" asp-action="NpiSearch">NPI Lookup</a>
+      <a asp-controller="About" asp-action="Index">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <a class="btn btn-ghost" asp-controller="External" asp-action="NpiSearch">Chatbot</a>
+    </div>
+  </div>
+</header>
+  <main class="container">
+    @RenderBody()
+  </main>
+
+  <footer class="footer">
+    © @DateTime.Now.Year MediConnect — Academic demo
+  </footer>
+
+  @RenderSection("Scripts", required: false)
+</body>
+</html>

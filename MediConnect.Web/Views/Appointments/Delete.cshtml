@@ -1,0 +1,9 @@
+@model MediConnect.Web.Models.Appointment
+@{ ViewData["Title"] = "Delete Appointment"; }
+<h2>Delete Appointment</h2>
+<p>Confirm deletion of appointment #@Model.Id?</p>
+<form asp-action="Delete" method="post">
+  <input type="hidden" asp-for="Id" />
+  <button type="submit">Delete</button>
+  <a asp-action="Index">Cancel</a>
+</form>

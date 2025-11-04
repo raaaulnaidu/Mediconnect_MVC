@@ -1,0 +1,48 @@
+@model MediConnect.Web.Models.Provider
+@{
+  ViewData["Title"] = "New Provider";
+}
+
+<div class="card" style="max-width:980px;margin:auto">
+  <div class="section-head">
+    <div class="section-title">New Provider</div>
+  </div>
+
+  <form asp-action="Create" method="post" class="grid grid-2">
+    @Html.AntiForgeryToken()
+
+    <label>Full Name
+      <input class="input" asp-for="FullName" placeholder="Dr. Casey Lee" />
+      <span asp-validation-for="FullName" class="text-danger"></span>
+    </label>
+
+    <label>Specialty
+      <input class="input" asp-for="Specialty" placeholder="Cardiology" />
+    </label>
+
+    <label>Phone
+      <input class="input" asp-for="Phone" placeholder="(555) 000-0000" />
+    </label>
+
+    <label>Email
+      <input class="input" asp-for="Email" type="email" placeholder="dr.lee@clinic.com" />
+    </label>
+
+    <label>City
+      <input class="input" asp-for="City" placeholder="Tampa" />
+    </label>
+
+    <label>State
+      <input class="input" asp-for="State" maxlength="2" placeholder="FL" />
+    </label>
+
+    <label>NPI (optional)
+      <input class="input" asp-for="NpiNumber" />
+    </label>
+
+    <div class="mt-2">
+      <button class="btn btn-success" type="submit">Save Provider</button>
+      <a class="btn" asp-action="Index">Cancel</a>
+    </div>
+  </form>
+</div>

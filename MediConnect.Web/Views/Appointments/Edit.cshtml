@@ -1,0 +1,32 @@
+@model MediConnect.Web.Models.Appointment
+@using MediConnect.Web.Models
+@{
+    ViewData["Title"] = "Edit Appointment";
+    var patients = (IEnumerable<Patient>)ViewBag.Patients;
+    var providers = (IEnumerable<Provider>)ViewBag.Providers;
+}
+<h2>@ViewData["Title"]</h2>
+<form asp-action="Edit" method="post" class="form">
+  <input type="hidden" asp-for="Id" />
+  <label>Patient
+    <select asp-for="PatientId">
+      @foreach (var p in patients) { <option value="@p.Id" selected="@(p.Id==Model.PatientId)">@p.FullName</option> }
+    </select>
+  </label>
+  <label>Provider
+    <select asp-for="ProviderId">
+      @foreach (var d in providers) { <option value="@d.Id" selected="@(d.Id==Model.ProviderId)">@d.FullName (@d.Specialty)</option> }
+    </select>
+  </label>
+  <label>Starts At <input asp-for="StartsAt" type="datetime-local" /></label>
+  <label>Reason <input asp-for="Reason" /></label>
+  <label>Status
+    <select asp-for="Status">
+      <option>Scheduled</option>
+      <option>Completed</option>
+      <option>Canceled</option>
+    </select>
+  </label>
+  <button type="submit">Save</button>
+  <a asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,65 @@
+@model MediConnect.Web.Models.Appointment
+@{
+  ViewData["Title"] = "Book Appointment";
+  var patients = (IEnumerable<dynamic>) (ViewBag.PatientOptions ?? new List<object>());
+  var providers = (IEnumerable<dynamic>) (ViewBag.ProviderOptions ?? new List<object>());
+}
+
+<div class="card" style="max-width:980px;margin:auto">
+  <div class="section-head">
+    <div class="section-title">Book Appointment</div>
+  </div>
+
+  <form asp-action="Create" method="post" class="grid grid-2">
+    @Html.AntiForgeryToken()
+
+    <label>Patient
+      <select class="input" asp-for="PatientId">
+        <option value="0">Select a patient…</option>
+        @foreach (var p in patients)
+        {
+          <option value="@p.Id">@p.Label</option>
+        }
+      </select>
+      <span asp-validation-for="PatientId" class="text-danger"></span>
+    </label>
+
+    <label>Provider
+      <select class="input" asp-for="ProviderId">
+        <option value="0">Select a provider…</option>
+        @foreach (var pr in providers)
+        {
+          <option value="@pr.Id">@pr.Label</option>
+        }
+      </select>
+      <span asp-validation-for="ProviderId" class="text-danger"></span>
+    </label>
+
+    <label>Start
+      <input class="input" asp-for="StartsAt" type="datetime-local" />
+      <span asp-validation-for="StartsAt" class="text-danger"></span>
+    </label>
+
+    <label>End
+      <input class="input" asp-for="EndsAt" type="datetime-local" />
+      <span asp-validation-for="EndsAt" class="text-danger"></span>
+    </label>
+
+    <label>Reason
+      <input class="input" asp-for="Reason" placeholder="Checkup / Ortho / Emergency" />
+    </label>
+
+    <label>Status
+      <select class="input" asp-for="Status">
+        <option>Scheduled</option>
+        <option>Completed</option>
+        <option>Cancelled</option>
+      </select>
+    </label>
+
+    <div class="mt-2">
+      <button class="btn btn-primary" type="submit">Save Visit</button>
+      <a class="btn" asp-action="Index">Cancel</a>
+    </div>
+  </form>
+</div>

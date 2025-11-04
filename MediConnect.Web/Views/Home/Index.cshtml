@@ -1,0 +1,94 @@
+@model MediConnect.Web.Models.HomeDashboardVM
+@{
+    ViewData["Title"] = "Clinic Operations Dashboard";
+}
+
+<div class="card" style="padding:22px">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Clinic Operations Dashboard</h2>
+      <div class="text-muted">Track patients, visits, and outcomes in a lightweight, offline-ready toolkit.</div>
+    </div>
+    <div>
+      <a class="btn btn-success" asp-controller="Patients" asp-action="Create">+ New Patient</a>
+      <a class="btn btn-primary" asp-controller="Appointments" asp-action="Create">+ New Visit</a>
+      <a class="btn" asp-controller="Home" asp-action="Seed">Reset Demo Data</a>
+    </div>
+  </div>
+
+  <div class="grid grid-3 mt-2">
+    <div class="metric"><div><div class="text-muted">Patients</div><strong>@Model.PatientCount</strong><div class="text-muted" style="margin-top:4px">Total registered patients.</div></div></div>
+    <div class="metric"><div><div class="text-muted">Visits</div><strong>@Model.VisitCount</strong><div class="text-muted" style="margin-top:4px">All recorded admissions.</div></div></div>
+    <div class="metric"><div><div class="text-muted">Occupancy (approx)</div><strong>@Model.OccupancyPct<span style="font-size:1rem">%</span></strong><div class="text-muted" style="margin-top:4px">7-day proxy from active visits.</div></div></div>
+  </div>
+</div>
+
+<div class="grid grid-2 mt-3">
+  <!-- Quick Search -->
+  <div class="card">
+    <div class="section-head"><div class="section-title">Quick Search</div></div>
+    <input id="qs" class="input" placeholder="Search patients by name or ID (e.g., 1001)" />
+    <table class="table mt-2">
+      <thead><tr><th style="width:12%">ID</th><th style="width:36%">Name</th><th style="width:26%">DOB</th><th style="width:26%">Gender</th></tr></thead>
+      <tbody id="qsBody">
+        <tr><td colspan="4" class="text-muted">Start typing to see results…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="card">
+    <div class="section-head"><div class="section-title">Recent Activity</div></div>
+    <table class="table">
+      <thead><tr><th style="width:26%">When</th><th style="width:18%">Type</th><th>Summary</th></tr></thead>
+      <tbody>
+      @if (Model.Recent == null || !Model.Recent.Any())
+      {
+        <tr><td colspan="3" class="text-muted">No recent activity yet.</td></tr>
+      }
+      else
+      {
+        foreach (var r in Model.Recent)
+        {
+          <tr>
+            <td>@r.When.ToString("yyyy-MM-dd HH:mm")</td>
+            <td>@r.Type</td>
+            <td>@r.Summary</td>
+          </tr>
+        }
+      }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@section Scripts {
+<script>
+(function(){
+  const qs = document.getElementById('qs');
+  const body = document.getElementById('qsBody');
+
+  let t;
+  qs && qs.addEventListener('input', () => {
+    clearTimeout(t);
+    const q = qs.value.trim();
+    t = setTimeout(async () => {
+      const res = await fetch(`/Home/SearchPatients?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      body.innerHTML = data.length
+        ? data.map(r => `<tr>
+              <td>${r.id}</td>
+              <td>${escapeHtml(r.name)}</td>
+              <td>${r.dob}</td>
+              <td>${r.gender}</td>
+            </tr>`).join('')
+        : `<tr><td colspan="4" class="text-muted">No matches.</td></tr>`;
+    }, 200);
+  });
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+})();
+</script>
+}

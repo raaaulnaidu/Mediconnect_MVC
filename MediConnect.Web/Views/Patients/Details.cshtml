@@ -1,0 +1,18 @@
+@model MediConnect.Web.Models.Patient
+@{ ViewData["Title"] = "Patient Details"; }
+<h2>@Model.FullName</h2>
+<ul>
+@{
+    var dob = Model.DateOfBirth.HasValue 
+        ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") 
+        : "—";
+}
+<p><strong>Date of Birth:</strong> @dob</p>
+
+  <li><b>Email:</b> @Model.Email</li>
+  <li><b>Phone:</b> @Model.Phone</li>
+</ul>
+<p>
+  <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+  <a asp-action="Index">Back</a>
+</p>

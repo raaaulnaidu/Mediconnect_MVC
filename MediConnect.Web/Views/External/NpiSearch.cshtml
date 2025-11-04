@@ -1,0 +1,41 @@
+@{
+  ViewData["Title"] = "NPI Provider Lookup";
+}
+<div class="card" style="max-width:980px;margin:auto">
+  <div class="section-head">
+    <div>
+      <div class="section-title">NPI Provider Lookup</div>
+      <div class="text-muted">Search the public NPI Registry by name, taxonomy, city, and state.</div>
+    </div>
+  </div>
+
+  <form asp-action="NpiResults" method="get" class="grid grid-3">
+    <label>First Name
+      <input class="input" name="FirstName" placeholder="e.g., Maria" />
+    </label>
+    <label>Last Name
+      <input class="input" name="LastName" placeholder="e.g., Gomez" />
+    </label>
+    <label>State (2-letter)
+      <input class="input" name="State" maxlength="2" placeholder="FL" />
+    </label>
+    <label>Taxonomy (specialty)
+      <input class="input" name="Taxonomy" placeholder="Cardiology" />
+    </label>
+    <label>City
+      <input class="input" name="City" placeholder="Tampa" />
+    </label>
+    <div class="mt-2">
+      <button class="btn btn-primary" type="submit">Search Registry</button>
+      <a class="btn" asp-action="NpiSearch">Clear</a>
+    </div>
+  </form>
+  <!-- Botpress Webchat Embed -->
+  <div style="margin-top:30px;">
+    <iframe 
+      src="https://cdn.botpress.cloud/webchat/v3.3/shareable.html?configUrl=https://files.bpcontent.cloud/2025/10/18/16/20251018163346-NDBWEAWG.json" 
+      style="width:100%; height:600px; border:none;" 
+      title="NPI Chatbot">
+    </iframe>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "Clinic Operations Dashboard";
+    var p = ViewBag.PatientCount  ?? 0;
+    var v = ViewBag.VisitCount    ?? 0;   // use Appointment count if you prefer
+    var occ = ViewBag.Occupancy   ?? 0;   // computed percent
+}
+
+<div class="card" style="padding:22px">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Clinic Operations Dashboard</h2>
+      <div class="text-muted">Track patients, visits, and outcomes in a lightweight, offline-ready toolkit.</div>
+    </div>
+    <div>
+      <a class="btn btn-success" asp-controller="Patients" asp-action="Create">+ New Patient</a>
+      <a class="btn btn-primary" asp-controller="Appointments" asp-action="Create">+ New Visit</a>
+      <a class="btn" asp-controller="Home" asp-action="Seed">Reset Demo Data</a>
+    </div>
+  </div>
+
+  <div class="grid grid-3 mt-2">
+    <div class="metric">
+      <div>
+        <div class="text-muted">Patients</div>
+        <strong>@p</strong> <span class="badge">+0</span>
+        <div class="text-muted" style="margin-top:4px">Total registered patients.</div>
+      </div>
+    </div>
+
+    <div class="metric">
+      <div>
+        <div class="text-muted">Visits</div>
+        <strong>@v</strong> <span class="badge">+0</span>
+        <div class="text-muted" style="margin-top:4px">All recorded admissions.</div>
+      </div>
+    </div>
+
+    <div class="metric">
+      <div>
+        <div class="text-muted">Occupancy (approx)</div>
+        <strong>@occ<span style="font-size:1rem">%</span></strong>
+        <div class="text-muted" style="margin-top:4px">7-day rolling proxy from active visits.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-2 mt-3">
+  <div class="card">
+    <div class="section-head">
+      <div class="section-title">Quick Search</div>
+    </div>
+    <input class="input" placeholder="Search patients by name or ID (e.g., 1001)" />
+    <table class="table mt-2">
+      <thead><tr><th>ID</th><th>Name</th><th>DOB</th><th>Gender</th></tr></thead>
+      <tbody>
+        <tr><td colspan="4" class="text-muted">Start typing to see results…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-head">
+      <div class="section-title">Recent Activity</div>
+    </div>
+    <table class="table">
+      <thead><tr><th>When</th><th>Type</th><th>Summary</th></tr></thead>
+      <tbody>
+        @* Replace with real data later *@
+        <tr><td>—</td><td>Patient</td><td>#1001 — Avery Chen</td></tr>
+        <tr><td>—</td><td>Patient</td><td>#1002 — Jen Haul</td></tr>
+        <tr><td>—</td><td>Patient</td><td>#1003 — Casey Lee</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid grid-2 mt-3">
+  <div class="card">
+    <div class="section-title">Shortcuts</div>
+    <div class="mt-2" style="display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn btn-primary" asp-controller="Patients" asp-action="Index">Manage Records</a>
+      <a class="btn btn-primary" asp-controller="Providers" asp-action="Index">Update Details</a>
+      <a class="btn btn-danger"  asp-controller="Patients" asp-action="Index">Delete Records</a>
+      <a class="btn" asp-controller="External" asp-action="NpiVisualize">View Analytics</a>
+      <a class="btn" asp-controller="About" asp-action="Index">About / Team</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">System Status</div>
+    <ul class="text-muted" style="margin:.5rem 0 0 1rem; line-height:1.8">
+      <li>Storage: singleton JSON snapshot</li>
+      <li>Patients array: OK (@p)</li>
+      <li>Visits array: OK (@v)</li>
+      <li>Next IDs: auto-increment</li>
+    </ul>
+  </div>
+</div>
